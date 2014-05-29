@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity" >
+
+    <RelativeLayout
+        android:id="@+id/main_titleBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#79ad63" >
+
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="@string/title_login"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+ 
+    <RelativeLayout 
+        android:id="@+id/activity_login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_titleBar_layout"
+        android:background="#ecd9df" 
+        >
+        
+        <EditText 
+            android:id="@+id/login_activity_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginLeft="35sp"
+            android:layout_marginRight="35sp"
+            android:text="请输入用户名"
+            android:textColor="#bbbbbb"
+            />
+        <EditText 
+            android:id="@+id/login_activity_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_activity_username"
+            android:layout_marginTop="15sp"
+            android:layout_marginLeft="35sp"
+            android:layout_marginRight="35sp"
+            android:text="请输入密码"
+            android:textColor="#bbbbbb"
+            android:inputType="textPassword"
+            />
+        
+        <Button 
+            android:id="@+id/login_activity_loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_activity_password"
+            android:layout_marginTop="15sp"
+            android:layout_marginLeft="38sp"
+            android:layout_marginRight="38sp"
+            android:text="@string/title_login"
+            android:textSize="22sp"
+            android:textColor="#ffffff"
+            android:background="#79ad63"
+            />
+        
+        <Button 
+            android:id="@+id/findpasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_activity_loginButton"
+            android:layout_marginTop="20sp"
+            android:background="#ecd9df"
+            android:layout_marginLeft="35sp"
+            android:text="找回密码"
+            android:textColor="#444444"
+            />
+        
+        <Button 
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_activity_loginButton"
+            android:layout_marginTop="20sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35sp"
+            android:textColor="#444444"
+            android:background="#ecd9df"
+            android:text="新账号注册"
+            />
+        
+    </RelativeLayout>
+    
+    
+    
+    
+</RelativeLayout>

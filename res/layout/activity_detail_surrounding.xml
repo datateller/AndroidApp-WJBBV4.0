@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailSurroundingActivity" >
+
+     <RelativeLayout
+        android:id="@+id/main_titleBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#79ad63" >
+
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="周边服务信息"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/webview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_titleBar_layout" >
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</RelativeLayout>

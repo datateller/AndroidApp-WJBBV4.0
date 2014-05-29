@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KnowledgeActivity" >
+
+      <RelativeLayout
+        android:id="@+id/main_titleBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#79ad63" >
+
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="@string/knowledge_title"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/main_login_imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_and_register" />
+    </RelativeLayout>
+    
+      <RelativeLayout 
+        android:id="@+id/knowledge_body_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_titleBar_layout"
+        android:background="#fdf8ea" >
+          
+           <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <ListView
+                android:id="@+id/basic_knowledge_content"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" 
+                android:fastScrollEnabled="true"
+                >
+            </ListView>
+        </LinearLayout>
+      </RelativeLayout>
+      
+      
+</RelativeLayout>

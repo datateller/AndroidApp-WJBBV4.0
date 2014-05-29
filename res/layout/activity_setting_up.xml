@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingUpActivity" >
+
+     <RelativeLayout
+        android:id="@+id/main_titleBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#79ad63" >
+
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="设置"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+    <RelativeLayout 
+          android:id="@+id/activity_setup_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_titleBar_layout"
+        android:background="#ecd9df" 
+        >
+        
+        <Button 
+            android:id="@+id/updateBabyBirthdayButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35sp"
+            android:layout_marginTop="75sp"
+            android:layout_marginRight="35sp"
+            android:background="#79ad63"
+            android:text="修改宝宝的出生日期"
+            android:textSize="22sp"
+            />
+        
+        <Button 
+            android:id="@+id/exitApp_Button"
+            android:layout_below="@+id/updateBabyBirthdayButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35sp"
+            android:layout_marginTop="25sp"
+            android:layout_marginRight="35sp"
+            android:background="#79ad63"
+            android:text="退出"
+            android:textSize="22sp"
+            />
+        
+    </RelativeLayout>
+     
+
+</RelativeLayout>
