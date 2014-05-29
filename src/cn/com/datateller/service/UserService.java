@@ -11,6 +11,8 @@ import java.util.Locale;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
+
 import android.util.Log;
 import cn.com.datateller.model.Baby;
 import cn.com.datateller.model.User;
@@ -237,7 +239,11 @@ public class UserService {
 			return null;
 		}
 		try {
-			return HttpConnection.readString(in);
+			String result= HttpConnection.readString(in);
+//			return result;
+			Gson gson=new Gson();
+			User u=gson.fromJson(result, User.class);
+			return String.valueOf(u.getUserId());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
