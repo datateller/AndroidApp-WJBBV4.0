@@ -1,17 +1,19 @@
 package cn.com.datateller.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import cn.com.datateller.model.User;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Base64;
+import cn.com.datateller.model.User;
 
 public class UserHelper {
 
@@ -61,5 +63,35 @@ public class UserHelper {
 		list.add(passwordPair);
 		return list;
 	}
+
+	public static String getBabyAgeInfo(String babyBirthdayString) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date date=sdf.parse(babyBirthdayString);
+			long currentTime=System.currentTimeMillis();
+			long year=(currentTime-date.getTime())/(1000*3600*24)/365;
+		    return String.valueOf(year);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+/*	public static Integer getBabyDayInfor(String birthday) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date date=sdf.parse(birthday);
+			long currentTime=System.currentTimeMillis();
+			Integer day=(int) ((currentTime-date.getTime())/(1000*3600*24));
+			return day;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}*/
 
 }

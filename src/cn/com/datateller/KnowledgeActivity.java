@@ -44,17 +44,16 @@ public class KnowledgeActivity extends Activity {
 		setContentView(R.layout.activity_knowledge);
 		Log.d(TAG, "In the KnowledgeActivity");
 		birthday=SharedPreferencesUtils.readBabyBirthdayInfor(KnowledgeActivity.this);
-		int day;
-		if(birthday.equals(""))  day=0;
+		int age;
+		if(birthday.equals(""))  age=0;
 		else{
 			//TODO 当前日期减去生日获得天数
-			day=365;
+			age=Integer.valueOf(UserHelper.getBabyAgeInfo(birthday));
 		} 
-			showBasicKnowledge(365);
-		
+			showBasicKnowledge(age);	
 	}
 
-	private void showBasicKnowledge(Integer day) {
+	private void showBasicKnowledge(Integer age) {
 		// TODO Auto-generated method stub
 		boolean sdcardIsmount = Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED);
@@ -80,12 +79,12 @@ public class KnowledgeActivity extends Activity {
 			show(basicKnowledgeList);
 			return;
 		} else {
-			getBasicKnowledgeFromServerAndWriteToFile(day,path,filename);
+			getBasicKnowledgeFromServerAndWriteToFile(age,path,filename);
 		}
 	}
 
 	private void getBasicKnowledgeFromServerAndWriteToFile(
-			final int day, final String path, final String filename) {
+			final int age, final String path, final String filename) {
 		// TODO Auto-generated method stub
 		final ProgressDialog myDialog = ProgressDialog.show(
 				KnowledgeActivity.this, "请稍等", "正在获取数据...", true, true);
@@ -117,7 +116,7 @@ public class KnowledgeActivity extends Activity {
 				user.setPassword(UserHelper
 						.readPassword(KnowledgeActivity.this));
 				ArrayList<BasicInformation> basicKnowledgelist = service
-						.getBasicInformationFromServer(user,day,"knowledges");
+						.getBasicInformationFromServer(user,age,"knowledges");
 				if(basicKnowledgelist!=null){
 					basicKnowledgelist = service.getIconByUrl(basicKnowledgelist);
 				}

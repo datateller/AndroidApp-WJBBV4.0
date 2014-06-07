@@ -43,5 +43,6 @@
     <string name="title_activity_growth_dialy">GrowthDialyActivity</string>
     <string name="title_activity_detail_commerical">DetailCommericalActivity</string>
     <string name="title_activity_detail_surrounding">DetailSurroundingActivity</string>
+    <string name="title_activity_update_user_infor">UpdateUserInforActivity</string>
 
 </resources>

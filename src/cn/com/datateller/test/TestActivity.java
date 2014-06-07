@@ -1,34 +1,34 @@
 package cn.com.datateller.test;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.datateller.model.Baby;
-import cn.com.datateller.model.BasicInformation;
-import cn.com.datateller.model.User;
-import cn.com.datateller.service.CircleService;
-import cn.com.datateller.service.InformationService;
-import cn.com.datateller.service.UserService;
-import cn.com.datateller.utils.SexEnum;
+import org.junit.Assert;
+
 import android.test.AndroidTestCase;
 import android.util.Log;
+import cn.com.datateller.model.BasicInformation;
+import cn.com.datateller.model.User;
+import cn.com.datateller.service.InformationService;
 
 public class TestActivity extends AndroidTestCase{
 
 	private static final String TAG="TestActivity";
 	
-/*	public void testGetBasicKnowledgesFromServer(){
+	public void testGetBasicKnowledgesFromServer(){
 		User user=new User();
 		user.setUserName("anonymous");
 		user.setPassword("wjbb123");
-		int age=2;
+		int age=3;
 		InformationService service=new InformationService();
 		Log.d(TAG, user.getUserName());
 		List<BasicInformation> basicKnowledge=service.getBasicInformationFromServer(user, age,"knowledges");
 		Log.d(TAG, basicKnowledge.toString());
+		Log.d(TAG, String.valueOf(basicKnowledge.size()));
+//		Assert.assertEquals(basicKnowledge.size(), 5);
 		System.out.println(basicKnowledge);
 	}
-	*/
+	
 /*	public void testRegister(){
 		User user=new User();
 		user.setUserName("hujun");
@@ -46,15 +46,28 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, result);
 	}*/
 	
-	public void testGetUserIdByNameAndPassword(){
+/*	public void testGetUserIdByNameAndPassword(){
 		User user=new User();
 		user.setUserName("hujun");
 		user.setPassword("123");
 		UserService service=new UserService();
 		Log.d(TAG,service.getUserIdByNameAndPassword("hujun", "123"));
-		
-	}
+	}*/
 	
+/*	public void getBasicInformationFromServer(){
+		User user=new User();
+		user.setUserName("anonymous");
+		user.setPassword("wjbb123");
+		InformationService service=new InformationService();
+		ArrayList<BasicInformation> list=service.getBasicInformationFromServer(user, 2, "knowledges");
+		Log.d(TAG, String.valueOf(list.size()));
+		for ( BasicInformation basic : list) {
+			System.out.println("test");
+			Log.d(TAG, "This is a test");
+			System.out.println(basic.toString());
+			Log.d(TAG, basic.toString());
+		}
+	}*/
 	
 	/*public void testGetCircleInforFromServer(){
 	   User user=new User();

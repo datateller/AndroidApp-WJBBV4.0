@@ -37,15 +37,15 @@ public final class R {
         public static final int test2=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f09004c;
+        public static final int action_settings=0x7f09004d;
         public static final int activity_login_layout=0x7f09000a;
         public static final int activity_register_withbabyinfor_layout=0x7f09002a;
         public static final int activity_setup_layout=0x7f090043;
-        public static final int activity_updateBabyBirthday_layout=0x7f090046;
+        public static final int activity_updateBabyBirthday_layout=0x7f090047;
         public static final int agecircle_button=0x7f09001c;
         public static final int basic_knowledge_content=0x7f090007;
         public static final int birthday=0x7f090042;
-        public static final int birthday_edittext=0x7f090047;
+        public static final int birthday_edittext=0x7f090048;
         public static final int birthmonth=0x7f09003c;
         public static final int birthyear=0x7f090040;
         public static final int boyButton=0x7f090034;
@@ -61,7 +61,7 @@ public final class R {
         public static final int collect_button=0x7f090008;
         public static final int collection_button=0x7f090021;
         public static final int commerical_button=0x7f090019;
-        public static final int confirm_button=0x7f090048;
+        public static final int confirm_button=0x7f090049;
         public static final int content_layout=0x7f090004;
         public static final int etbirthday=0x7f09003b;
         public static final int etbirthmonth=0x7f09003f;
@@ -74,14 +74,14 @@ public final class R {
         public static final int etpassword=0x7f090027;
         public static final int etschooladdress=0x7f09003e;
         public static final int etuserName=0x7f090026;
-        public static final int exitApp_Button=0x7f090045;
+        public static final int exitApp_Button=0x7f090046;
         public static final int familyaddress=0x7f090030;
         public static final int familycircle_button=0x7f09001d;
         public static final int findpasswordButton=0x7f09000e;
         public static final int finishButton=0x7f09003a;
         public static final int girlButton=0x7f090035;
         public static final int growthdiary_button=0x7f090020;
-        public static final int img=0x7f090049;
+        public static final int img=0x7f09004a;
         public static final int knowledge_body_relativeLayout=0x7f090006;
         public static final int knowledge_button=0x7f090018;
         public static final int login_activity_loginButton=0x7f09000d;
@@ -109,9 +109,10 @@ public final class R {
         public static final int tvConfirmPassword=0x7f090025;
         public static final int tvPassword=0x7f090024;
         public static final int tvUserName=0x7f090023;
-        public static final int tvabstract=0x7f09004b;
-        public static final int tvtitle=0x7f09004a;
+        public static final int tvabstract=0x7f09004c;
+        public static final int tvtitle=0x7f09004b;
         public static final int updateBabyBirthdayButton=0x7f090044;
+        public static final int updateUserInforButton=0x7f090045;
         public static final int webview=0x7f090003;
         public static final int webview_layout=0x7f090002;
     }
@@ -134,7 +135,8 @@ public final class R {
         public static final int activity_setting_up=0x7f03000f;
         public static final int activity_surrounding=0x7f030010;
         public static final int activity_update_baby_birthday=0x7f030011;
-        public static final int basic_knowledge_listview_item=0x7f030012;
+        public static final int activity_update_baby_infor=0x7f030012;
+        public static final int basic_knowledge_listview_item=0x7f030013;
     }
     public static final class menu {
         public static final int age_circle=0x7f080000;
@@ -156,6 +158,7 @@ public final class R {
         public static final int school_circle=0x7f080010;
         public static final int setting_up=0x7f080011;
         public static final int update_baby_birthday=0x7f080012;
+        public static final int update_user_infor=0x7f080013;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -198,6 +201,7 @@ public final class R {
         public static final int title_activity_school_circle=0x7f060026;
         public static final int title_activity_setting_up=0x7f060009;
         public static final int title_activity_update_baby_birthday=0x7f060023;
+        public static final int title_activity_update_user_infor=0x7f06002a;
         public static final int title_login=0x7f06000f;
         public static final int weightunit=0x7f060019;
     }

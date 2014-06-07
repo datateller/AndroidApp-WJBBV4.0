@@ -58,9 +58,11 @@ public class MainActivity extends Activity {
 		String babyBirthdayString=SharedPreferencesUtils.readBabyBirthdayInfor(MainActivity.this);
 		if(babyBirthdayString==""){
 			babyBirthdayString="请您输入宝宝的出生日期";
+		}else{
+			babyBirthdayString="您的宝贝已经"+UserHelper.getBabyAgeInfo(babyBirthdayString)+"岁了";
 		}
 		//当前日期减去宝宝的出生年月
-		babyBirthdayString="您宝宝已经4岁6个月了";
+//		babyBirthdayString="您宝宝已经4岁6个月了";
 		babyBirthday_textview.setText(babyBirthdayString);
 		dateAndWeather_textview.setText(DateUtils.getCurrentDay());
 		login_imageButton.setOnClickListener(new ButtonClick());

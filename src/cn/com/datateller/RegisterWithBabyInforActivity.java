@@ -26,6 +26,7 @@ import cn.com.datateller.service.UserService;
 import cn.com.datateller.utils.DateUtils;
 import cn.com.datateller.utils.DialogHelper;
 import cn.com.datateller.utils.SexEnum;
+import cn.com.datateller.utils.SharedPreferencesUtils;
 import cn.com.datateller.utils.UserHelper;
 
 public class RegisterWithBabyInforActivity extends Activity {
@@ -35,7 +36,7 @@ public class RegisterWithBabyInforActivity extends Activity {
 	private RadioGroup rgchildsex;
 	private EditText etchildheight;
 	private EditText etchildweight;
-	private EditText etfamilyAddress;
+	private EditText etfamilyAddress;  
 	private EditText etschoolAddress;
 	private Button finshButton;
 	private SexEnum sex=SexEnum.BOY;
@@ -137,6 +138,8 @@ public class RegisterWithBabyInforActivity extends Activity {
 						if(result.equals("True")){
 							UserHelper.deleteUserInfo(RegisterWithBabyInforActivity.this);
 							UserHelper.saveUserInfo(RegisterWithBabyInforActivity.this, username, password,Integer.valueOf(uid));
+							SharedPreferencesUtils.saveBabyBirthdayInfor(RegisterWithBabyInforActivity.this,etbirthyear.getText().toString()+"-"+
+									etbirthmonth.getText().toString()+"-"+etbirthday.getText().toString());
 							intent.putExtra("birthday",etbirthyear.getText().toString()+etbirthmonth.getText().toString()+etbirthday.getText().toString());
 							intent.setClass(RegisterWithBabyInforActivity.this, MainActivity.class);
 							startActivity(intent);

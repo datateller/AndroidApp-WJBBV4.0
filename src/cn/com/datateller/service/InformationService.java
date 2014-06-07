@@ -115,7 +115,7 @@ public class InformationService {
 			return null;
 		ArrayList<BasicInformation> list;
 		System.out.println(input.toString());
-		list = AnalysisBasicKnowledge(input.substring(1, input.length()-1));
+		list = AnalysisBasicKnowledge(input);
 //		list =AnalysisBasicKnowledge(input);
 		return list;
 	}

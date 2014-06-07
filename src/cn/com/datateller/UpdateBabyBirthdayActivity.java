@@ -60,7 +60,7 @@ public class UpdateBabyBirthdayActivity extends Activity {
 				String month = dateString.substring(5, 7);
 				String day = dateString.substring(8, 10);
 				String formatDateString = year + "-" + month + "-" + day;
-				SharedPreferencesUtils.saveDateInfor(
+				SharedPreferencesUtils.saveBabyBirthdayInfor(
 						UpdateBabyBirthdayActivity.this, formatDateString);
 				Intent intent = new Intent();
 				intent.putExtra("formatDateString", formatDateString);
