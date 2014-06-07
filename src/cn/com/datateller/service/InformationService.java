@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -321,5 +322,67 @@ public class InformationService {
 		String urlString = HOST + tag + "/webview/" + String.valueOf(id);
 		String input = HttpConnection.communicateServerWithGetMethod(urlString);
 		return input;
+	}
+
+	public void deleteCacheFile(String path, String filename) {
+		// TODO Auto-generated method stub
+		List<String> informationFilenameList=new ArrayList<String>();
+		try{
+			File file=new File(path,filename);
+			FileInputStream is=new FileInputStream(file);
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(is);
+			Element eleRoot = doc.getRootElement();
+			Iterator<Element> iter = eleRoot.elementIterator();
+			while(iter.hasNext()){
+//				Log.d(TAG, String.valueOf(iter.next().getName()));
+				Element basicInformationElement=iter.next();
+				if(basicInformationElement.getName().equals("BasicInformation")){
+                   BasicInformation basicInformation=new BasicInformation();
+                   Iterator<Element> inIterator=basicInformationElement.elementIterator();
+                   while(inIterator.hasNext()){
+                	   Element ele=inIterator.next();
+                	   if(ele.getName().equals("icon")){
+                		   String iconFilename=ele.getText();
+                		   if(!iconFilename.equals(Environment.getExternalStorageDirectory()+"/default.gif")){
+								File iconfile=new File(iconFilename);
+								if(iconfile.exists()) iconfile.delete();
+                		   }
+                	   }if(ele.getName().equals("id")){
+                		  informationFilenameList.add(ele.getText());
+                	   }
+                   }
+				}
+			}
+			file.delete();
+		}catch (FileNotFoundException e){
+			e.printStackTrace();
+		}catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			deleteInformationByInformationFilenameList(informationFilenameList,path);
+		}
+	}
+
+	private void deleteInformationByInformationFilenameList(
+			List<String> list,String path) {
+		// TODO Auto-generated method stub
+		File file=new File(path);
+		String[] filenameArray=file.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File file, String name) {
+				// TODO Auto-generated method stub
+				if(name.toLowerCase().endsWith(".html"))
+				return true;
+				else return false;
+			}
+		});
+		for (String stringid : list) {
+			for(String filename:filenameArray){
+               if(filename.indexOf(stringid)>0)
+                 new File(path,filename).delete();
+			}
+		}
 	}
 }

@@ -5,17 +5,20 @@ import java.util.List;
 
 import org.junit.Assert;
 
+import android.os.Environment;
 import android.test.AndroidTestCase;
 import android.util.Log;
 import cn.com.datateller.model.BasicInformation;
 import cn.com.datateller.model.User;
 import cn.com.datateller.service.InformationService;
+import cn.com.datateller.utils.DateUtils;
 
 public class TestActivity extends AndroidTestCase{
 
 	private static final String TAG="TestActivity";
-	
-	public void testGetBasicKnowledgesFromServer(){
+	private static final String NAME="BasicKnowledge";
+	private static final String APPNAME="yangwabao";
+/*	public void testGetBasicKnowledgesFromServer(){
 		User user=new User();
 		user.setUserName("anonymous");
 		user.setPassword("wjbb123");
@@ -27,7 +30,7 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, String.valueOf(basicKnowledge.size()));
 //		Assert.assertEquals(basicKnowledge.size(), 5);
 		System.out.println(basicKnowledge);
-	}
+	}*/
 	
 /*	public void testRegister(){
 		User user=new User();
@@ -77,10 +80,15 @@ public class TestActivity extends AndroidTestCase{
 	   CircleService service=new CircleService();
 	   String html=service.getCircleInforFromServer(user);
 	   System.out.println(html);
-	   
-		
 	}*/
 	
-	
+	public void testDeleteCacheFile(){
+		String filename = NAME+".xml";
+		String currentDay = DateUtils.getStandardCurrentDay();
+		String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
+		InformationService service=new InformationService();
+		service.deleteCacheFile(path,filename);
+		
+	}
 	
 }

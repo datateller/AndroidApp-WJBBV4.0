@@ -15,7 +15,9 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.com.datateller.model.BasicInformation;
@@ -34,13 +36,26 @@ public class CommericalActivity extends Activity {
 	private static final String NAME="CommericalInformation";
 	private ListView listview;
 	private Handler handler;
-	
+	private ImageButton freshButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_commerical);
+		freshButton=(ImageButton)findViewById(R.id.freshButton);
 		showCommericalInformation();
+		freshButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				InformationService service=new InformationService();
+				String currentDay = DateUtils.getStandardCurrentDay();
+				String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
+				String filename = NAME+".xml";
+				service.deleteCacheFile(path,filename);
+				showCommericalInformation();
+			}
+		});
 	}
 
 	private void showCommericalInformation() {

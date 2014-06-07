@@ -16,7 +16,9 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.com.datateller.model.BasicInformation;
@@ -35,6 +37,7 @@ public class KnowledgeActivity extends Activity {
 	private static final String APPNAME="yangwabao";
 	private static final String NAME="BasicKnowledge";
 	private ListView listview;
+	private ImageButton freshButton;
 	private Handler handler;
 	private String birthday;
 	
@@ -43,14 +46,28 @@ public class KnowledgeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_knowledge);
 		Log.d(TAG, "In the KnowledgeActivity");
+		freshButton=(ImageButton)findViewById(R.id.freshButton);
 		birthday=SharedPreferencesUtils.readBabyBirthdayInfor(KnowledgeActivity.this);
-		int age;
+		final int age;
 		if(birthday.equals(""))  age=0;
 		else{
 			//TODO 当前日期减去生日获得天数
 			age=Integer.valueOf(UserHelper.getBabyAgeInfo(birthday));
 		} 
-			showBasicKnowledge(age);	
+		showBasicKnowledge(age);
+		freshButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				InformationService service=new InformationService();
+				String currentDay = DateUtils.getStandardCurrentDay();
+				String filename = NAME+birthday+".xml";
+				String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
+				service.deleteCacheFile(path,filename);
+				showBasicKnowledge(age);
+			}
+		});
+		
 	}
 
 	private void showBasicKnowledge(Integer age) {
