@@ -24,7 +24,7 @@ public class DetailCommericalActivity extends Activity {
 	private static final String TAG = "DetailCommericalActivity";
 	private static final String NAME = "Commerical";
 	private static final String APPNAME = "yangwabao";
-	private static final String BASICCOMMERICAL = "basicCommerical";
+//	private static final String BASICCOMMERICAL = "basicCommerical";
 	private String categoryTag;
 
 	@Override

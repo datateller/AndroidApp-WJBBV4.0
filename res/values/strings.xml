@@ -44,5 +44,6 @@
     <string name="title_activity_detail_commerical">DetailCommericalActivity</string>
     <string name="title_activity_detail_surrounding">DetailSurroundingActivity</string>
     <string name="title_activity_update_user_infor">UpdateUserInforActivity</string>
+    <string name="title_activity_age_circle_detail">AgeCircleDetailActivity</string>
 
 </resources>

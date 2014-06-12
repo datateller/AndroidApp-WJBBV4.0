@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".SettingUpActivity" >
 
-     <RelativeLayout
+    <RelativeLayout
         android:id="@+id/main_titleBar_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -19,55 +19,90 @@
             android:text="设置"
             android:textColor="#ffffff"
             android:textSize="22sp" />
-
     </RelativeLayout>
-    <RelativeLayout 
-          android:id="@+id/activity_setup_layout"
+
+    <RelativeLayout
+        android:id="@+id/personInforLayout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/main_titleBar_layout"
+        android:background="#ecd9df" >
+
+        <ImageView
+            android:id="@+id/personImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:padding="8dp"
+            android:scaleType="matrix"
+            android:src="@drawable/addpicture" >
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:scaleType="matrix"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/mm_submenu" />
+
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/personImageView"
+            android:text="username"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/activity_setup_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_titleBar_layout"
-        android:background="#ecd9df" 
-        >
-        
-        <Button 
+        android:layout_below="@id/personInforLayout"
+        android:background="#ecd9df" >
+
+        <Button
             android:id="@+id/updateBabyBirthdayButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="35sp"
-            android:layout_marginTop="75sp"
             android:layout_marginRight="35sp"
+            android:layout_marginTop="55sp"
             android:background="#79ad63"
             android:text="宝宝的出生日期"
-            android:textSize="22sp"
-            />
-        
-        <Button 
+            android:textSize="22sp" />
+
+        <Button
             android:id="@+id/updateUserInforButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/updateBabyBirthdayButton"
             android:layout_marginLeft="35sp"
-            android:layout_marginTop="25sp"
             android:layout_marginRight="35sp"
+            android:layout_marginTop="25sp"
             android:background="#79ad63"
             android:text="个人信息"
-            android:textSize="22sp"
-            />
-        
-        <Button 
+            android:textSize="22sp" />
+
+        <Button
             android:id="@+id/exitApp_Button"
-            android:layout_below="@+id/updateUserInforButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/updateUserInforButton"
             android:layout_marginLeft="35sp"
-            android:layout_marginTop="25sp"
             android:layout_marginRight="35sp"
+            android:layout_marginTop="25sp"
             android:background="#79ad63"
             android:text="退出"
-            android:textSize="22sp"
-            />
-        
+            android:textSize="22sp" />
     </RelativeLayout>
-     
 
 </RelativeLayout>

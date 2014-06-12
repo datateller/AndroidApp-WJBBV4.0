@@ -16,7 +16,7 @@ import cn.com.datateller.utils.UserHelper;
 public class MainActivity extends Activity {
 
 	private ImageButton login_imageButton;
-	private TextView babyBirthday_textview;
+//	private TextView babyBirthday_textview;
 	private TextView dateAndWeather_textview;
 	private Button knowledgeButton;
 	private Button commericalButton;
@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		login_imageButton=(ImageButton)findViewById(R.id.main_login_imageButton);
 //		main_imageView=(ImageView)findViewById(R.id.main_imageView);
-		babyBirthday_textview=(TextView)findViewById(R.id.main_babyBirthday_textview);
+//		babyBirthday_textview=(TextView)findViewById(R.id.main_babyBirthday_textview);
 		dateAndWeather_textview=(TextView)findViewById(R.id.main_dateAndWeather_textview);
 		knowledgeButton=(Button)findViewById(R.id.knowledge_button);
 		commericalButton=(Button)findViewById(R.id.commerical_button);
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 		}
 		//当前日期减去宝宝的出生年月
 //		babyBirthdayString="您宝宝已经4岁6个月了";
-		babyBirthday_textview.setText(babyBirthdayString);
+//		babyBirthday_textview.setText(babyBirthdayString);
 		dateAndWeather_textview.setText(DateUtils.getCurrentDay());
 		login_imageButton.setOnClickListener(new ButtonClick());
 		knowledgeButton.setOnClickListener(new ButtonClick());

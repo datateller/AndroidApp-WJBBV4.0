@@ -18,9 +18,7 @@
             android:gravity="center_vertical"
             android:text="特价商品信息"
             android:textColor="#ffffff"
-            android:textSize="22sp" />
-
-        
+            android:textSize="22sp" />      
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/webview_layout"

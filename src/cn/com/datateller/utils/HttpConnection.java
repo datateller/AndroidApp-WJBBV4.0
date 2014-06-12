@@ -1,18 +1,29 @@
 package cn.com.datateller.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.Header;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+
+import android.util.Log;
 
 public class HttpConnection {
 
@@ -115,4 +126,27 @@ public class HttpConnection {
 		return null;
 	}
 
+	public static String upLoadPicFileToServer(String username,String filepath,List<NameValuePair> list) throws ClientProtocolException, IOException{
+		String urlString="http://wjbb.cloudapp.net/photos/uploadhead/";
+		HttpClient httpclient = new DefaultHttpClient();
+		httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		HttpPost httppost = new HttpPost(urlString);
+		httppost.addHeader("Content-Type", "multipart/form-data");  
+		File file = new File(filepath);
+		UrlEncodedFormEntity entity;
+		entity = new UrlEncodedFormEntity(list, "UTF-8");
+		MultipartEntity mpEntity = new MultipartEntity(); //ÎÄ¼þ´«Êä
+		ContentBody cbFile = new FileBody(file);
+		mpEntity.addPart("head", cbFile); 
+		httppost.setEntity(entity);
+		httppost.setEntity(mpEntity);
+		HttpResponse response = httpclient.execute(httppost);
+		Log.d(TAG, String.valueOf(response.getStatusLine().getStatusCode()));
+		if (response.getStatusLine().getStatusCode() == 200) {
+			InputStream in = response.getEntity().getContent();
+			return readString(in);
+		}
+		return null;
+	}
+	
 }

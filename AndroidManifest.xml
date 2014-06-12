@@ -112,12 +112,20 @@
             android:name="cn.com.datateller.UpdateBabyInforActivity"
             android:label="@string/title_activity_update_user_infor" >
         </activity>
-        <service android:name="cn.com.datateller.service.NotificationService"></service>
-        <receiver android:name="cn.com.datateller.receiver.StartupReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>			
-		</receiver>
+
+        <service android:name="cn.com.datateller.service.NotificationService" >
+        </service>
+
+        <receiver android:name="cn.com.datateller.receiver.StartupReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="cn.com.datateller.AgeCircleDetailActivity"
+            android:label="@string/title_activity_age_circle_detail" >
+        </activity>
     </application>
 
     <instrumentation

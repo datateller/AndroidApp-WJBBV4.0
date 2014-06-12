@@ -1,100 +1,49 @@
 package cn.com.datateller;
 
-import cn.com.datateller.utils.UserHelper;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings.LayoutAlgorithm;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import cn.com.datateller.model.BasicInformation;
+import cn.com.datateller.model.Topic;
+import cn.com.datateller.model.User;
+import cn.com.datateller.service.CircleService;
+import cn.com.datateller.service.InformationService;
+import cn.com.datateller.utils.CircleListViewAdapter;
+import cn.com.datateller.utils.CircleListViewHelper;
+import cn.com.datateller.utils.DateUtils;
+import cn.com.datateller.utils.DialogHelper;
+import cn.com.datateller.utils.ListViewHelper;
+import cn.com.datateller.utils.UserHelper;
 
 public class AgeCircleActivity extends Activity {
 
-	private WebView webview;
+	private static final String TAG="KnowledgeActivity";
+	private static final String APPNAME="yangwabao";
+	private static final String NAME="AgeTopic";
+	private ListView listview;
 	private Handler handler;
-	private ProgressDialog progressDialog;
-	private static final String TAG = "AgeCircleActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_age_circle);
-		webview = (WebView) findViewById(R.id.webview);
-		webview.getSettings().setJavaScriptEnabled(true);
-		webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-		webview.getSettings().setSupportZoom(true);
-		webview.setScrollBarStyle(0);
-		webview.getSettings().setDefaultTextEncodingName("UTF-8");
-		final Integer uid = UserHelper.readUserId(AgeCircleActivity.this);
-
-		String urlAddress = "http://wjbb.cloudapp.net/quan/gettopicwebview/"
-				+ uid + "/";
-		Log.d(TAG, String.valueOf(urlAddress));
-		// webview.loadUrl("http://wjbb.cloudapp.net/quan/gettopicwebview/10/");
-		webview.setWebViewClient(new WebViewClient() {
-			public boolean shouldOverrideUrlLoading(final WebView view,
-					final String url) {
-				loadurl(view, url, uid);// 载入网页
-				return true;
-			}// 重写点击动作,用webview载入
-
-		});
-		webview.setWebChromeClient(new WebChromeClient() {
-			public void onProgressChanged(WebView view, int progress) {// 载入进度改变而触发
-				if (progress == 100) {
-					handler.sendEmptyMessage(1);// 如果全部载入,隐藏进度对话框
-				}
-				super.onProgressChanged(view, progress);
-			}
-		});
-
-		progressDialog = new ProgressDialog(AgeCircleActivity.this);
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.setMessage("数据载入中，请稍候！");
-
-		loadurl(webview, urlAddress, uid);
-		handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {// 定义一个Handler，用于处理下载线程与UI间通讯
-
-				// Log.d(TAG, "InLine 68"+String.valueOf(msg.what));
-				Bundle bundle = msg.getData();
-				int result = bundle.getInt("msgid");
-				switch (result) {
-				case 0:
-					progressDialog.show();// 显示进度对话框
-					break;
-				case 1:
-					progressDialog.dismiss();// 隐藏进度对话框，不可使用dismiss()、cancel(),否则再次调用show()时，显示的对话框小圆圈不会动。
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							AgeCircleActivity.this);
-					builder.setTitle("提示");
-					builder.setMessage("对不起，您尚未注册成为养娃宝的用户，登陆养娃宝，您将获得我们为您提供的更多的个性化服务");
-					builder.setPositiveButton("确认", new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							// dialog.dismiss();
-							Intent intent = new Intent();
-							intent.setClass(AgeCircleActivity.this,
-									LoginActivity.class);
-							startActivity(intent);
-						}
-					}).show();
-					break;
-				}
-			}
-		};
+        showAgeCircleInformation();
 	}
 
 	@Override
@@ -104,25 +53,97 @@ public class AgeCircleActivity extends Activity {
 		return true;
 	}
 
-	public void loadurl(final WebView view, final String url, final Integer uid) {
+	private void showAgeCircleInformation(){
+		boolean sdcardIsmount = Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED);
+		if(sdcardIsmount==false){
+			getCircleInforFromServerAndWriteToFile(0,null,null);
+			return;
+		}
+		String currentDay = DateUtils.getStandardCurrentDay();
+		File fileDir=new File(Environment.getExternalStorageDirectory()+"/"+APPNAME+"/"+currentDay);
+		if(!fileDir.exists()){
+			fileDir.mkdirs();
+		}
+		String filename = NAME+".xml";
+		String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
+		boolean isExists = new File(path, filename).exists();
+		if (isExists) {
+//          直接从文件中读取basicknowledge，并展示返回
+			CircleService service=new CircleService();
+			List<Topic> basicCircleList=service.readCircleInformationFromFile(path, filename);
+			show(basicCircleList);
+			return;
+		} else {
+			getCircleInforFromServerAndWriteToFile(0,path,filename);
+		}
+	}
 
-		new Thread() {
+	private void getCircleInforFromServerAndWriteToFile(int tmp, final String path,
+			final String filename) {
+		// TODO Auto-generated method stub
+		final ProgressDialog myDialog = ProgressDialog.show(
+				AgeCircleActivity.this, "请稍等", "正在获取数据...", true, true);
+
+		handler = new Handler() {
+			public void handleMessage(Message msg) {
+				Bundle bundle = msg.getData();
+				ArrayList basicTopic = bundle
+						.getParcelableArrayList("basicTopic");
+				myDialog.dismiss();
+				CircleService service=new CircleService();
+				if(basicTopic==null) {
+					//如果获取的basicTopic不正确，则根据不同的原因进行处理，匿名用户则进入注册和登陆模块
+					DialogHelper.showDialog(AgeCircleActivity.this, "获取年龄圈信息失败");
+					return;
+				}
+				if(path!=null||filename!=null) service.writeBasicKnowledgeToFile(path, filename,basicTopic);
+				show(basicTopic);
+			}
+		};
+		new Thread(new Runnable() {
+			@Override
 			public void run() {
+				// TODO Auto-generated method stub
+				CircleService service=new CircleService();
+				User user = new User();
+				user.setUserName(UserHelper
+						.readUserName(AgeCircleActivity.this));
+				user.setPassword(UserHelper
+						.readPassword(AgeCircleActivity.this));
+				String result=service.getCircleInforFromServerByNative(user);
+				List<Topic> topicList=service.analysisTopic(result);
+				Log.d(TAG, String.valueOf(topicList));
 				Message msg = new Message();
 				Bundle bundle = new Bundle();
-				if (uid == 3) {
-					// handler.sendEmptyMessage(1);
-					bundle.putInt("msgid", 1);
-					Log.d(TAG, String.valueOf(uid));
-					msg.setData(bundle);
-					handler.sendMessage(msg);
-				} else {
-					bundle.putInt("msgid", 0);
-					msg.setData(bundle);
-					handler.sendMessage(msg);
-					view.loadUrl(url);// 载入网页
-				}
+				bundle.putParcelableArrayList("basicTopic",
+						(ArrayList<? extends Parcelable>)topicList );
+				msg.setData(bundle);
+				handler.sendMessage(msg);
+			}}).start();
+	}
+	
+	private void show(final List<Topic> basicCircleList) {
+		// TODO Auto-generated method stub
+		CircleListViewHelper helper=new CircleListViewHelper();
+		List<Map<String, Object>> data=helper.getData(basicCircleList);
+		listview=(ListView)findViewById(R.id.topic_content);
+		CircleListViewAdapter adapter=new CircleListViewAdapter(AgeCircleActivity.this, data);
+		listview.setAdapter(adapter);
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				ListView lview = (ListView) parent;
+				int index = (Integer) lview.getItemAtPosition(position);
+				int topicId=Integer.valueOf(basicCircleList.get(index).getTopicid());
+				Intent intent = new Intent();
+				intent.putExtra("topicId", topicId);
+				intent.setClass(AgeCircleActivity.this, AgeCircleDetailActivity.class);
+				AgeCircleActivity.this.startActivity(intent);
 			}
-		}.start();
+		});
 	}
 }
