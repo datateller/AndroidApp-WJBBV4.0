@@ -40,7 +40,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class InformationService {
 
-	private static final String HOST = "http://168.63.219.187:80/";
+	private static final String HOST = "http://yangwabao.com";
 	private static final String TAG = "InformationService";
 	private static final String APPNAME = "yangwabao";
 
@@ -89,7 +89,7 @@ public class InformationService {
 			int age,String tag) {
 		// TODO Auto-generated method stub
 //		String urlString = HOST + "mobile/+getknowledges/";
-		String urlString = HOST + "mobile/get"+tag+"/";
+		String urlString = HOST + "/mobile/get"+tag+"/";
 		Log.d(TAG, user.getUserName());
 		List<NameValuePair> userlist = UserHelper
 				.initUserInforNameValuePair(user);
@@ -319,7 +319,7 @@ public class InformationService {
 
 	public String getInformationById(int id, User user, String tag) {
 		System.out.println(tag);
-		String urlString = HOST + tag + "/webview/" + String.valueOf(id);
+		String urlString = HOST +"/"+tag + "/webview/" + String.valueOf(id);
 		String input = HttpConnection.communicateServerWithGetMethod(urlString);
 		return input;
 	}

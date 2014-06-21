@@ -21,7 +21,7 @@ import cn.com.datateller.utils.UserHelper;
 
 public class UserService {
 
-	private static final String HOST = "http://168.63.219.187:80";
+	private static final String HOST = "http://yangwabao.com";
 	private static final String TAG = "UserService";
 
 	public boolean userLogin(String username, String password) {

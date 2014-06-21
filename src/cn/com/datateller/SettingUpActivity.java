@@ -1,34 +1,46 @@
 package cn.com.datateller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
-import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.com.datateller.model.User;
+import cn.com.datateller.service.ImageService;
+import cn.com.datateller.utils.HttpConnection;
 import cn.com.datateller.utils.SharedPreferencesUtils;
 import cn.com.datateller.utils.UserHelper;
 
 public class SettingUpActivity extends Activity {
 
+	private static final String TAG="SettingUpActivity";
 	private Button updateBabyBirthdayButton;
 	private Button exitAppButton;
 	private Button updateUserInforButton;
 	private ImageView personImageView;
 	private TextView usernameTextView;
+	private Handler handler;
+	private User user=new User();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +53,13 @@ public class SettingUpActivity extends Activity {
 		usernameTextView=(TextView)findViewById(R.id.usernameTextView);
 		
 		String username=UserHelper.readUserName(SettingUpActivity.this);
+		String password=UserHelper.readPassword(SettingUpActivity.this);
 		usernameTextView.setText(username);
+		
+		user.setUserName(username);
+		user.setPassword(password);
+		
+		getUserHeadFromServer(user);
 		
 		updateBabyBirthdayButton.setOnClickListener(new ButtonClick());
 		exitAppButton.setOnClickListener(new ButtonClick());
@@ -58,6 +76,39 @@ public class SettingUpActivity extends Activity {
 				startActivityForResult(pictureIntent, 1);
 			}
 		});
+	}
+	private void getUserHeadFromServer(final User user) {
+		// TODO Auto-generated method stub
+		String localpath=UserHelper.readUserHeadPicUrl(SettingUpActivity.this);
+		if((!localpath.equals(""))&&(!localpath.contains("http://"))){
+			Bitmap bitmap=BitmapFactory.decodeFile(localpath);
+			personImageView.setImageBitmap(bitmap); 
+			return;
+		}
+		handler=new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				Bundle bundle = msg.getData();
+				String filepath=bundle.getString("headfilepath");
+				UserHelper.writeUserHeadPicUrl(SettingUpActivity.this, filepath);
+				Bitmap bitmap=BitmapFactory.decodeFile(filepath);
+				personImageView.setImageBitmap(bitmap); 
+			}
+		};
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				ImageService service=new ImageService();
+				String filepath=service.getHeadFromServer(user);
+				Message msg=new Message();
+				Bundle bundle = new Bundle();
+				bundle.putString("headfilepath", filepath);
+				msg.setData(bundle);
+				handler.sendMessage(msg);
+			}
+		}).start();
 	}
 
 	@Override
@@ -118,14 +169,62 @@ public class SettingUpActivity extends Activity {
 	            Log.e("uri", uri.toString());  
 	            ContentResolver cr = this.getContentResolver();  
 	            try {  
-	                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
+	                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+	                Log.d(TAG, String.valueOf(uri));
 	                ImageView imageView = (ImageView) findViewById(R.id.personImageView);  
 	                /* 将Bitmap设定到ImageView */  
-	                imageView.setImageBitmap(bitmap);  
+	                imageView.setImageBitmap(bitmap);
+	                String filename=getFilenameFromUricontent(uri);
+					Log.d(TAG, "#######################"+filename);
+					upLoadHeadPicToServer(user,filename);
+					Log.d(TAG, "#############UploadComplete");
 	            } catch (FileNotFoundException e) {  
 	                Log.e("Exception", e.getMessage(),e);  
 	            }  
 	        }  
 	        super.onActivityResult(requestCode, resultCode, data);  
-	    }  
+	    }
+	
+	private String getFilenameFromUricontent(Uri uri) {
+		// TODO Auto-generated method stub
+		String[] proj = { MediaStore.Images.Media.DATA };  
+		Cursor actualimagecursor = SettingUpActivity.this.managedQuery(uri,proj,null,null,null); 
+		int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
+		actualimagecursor.moveToFirst();   
+		String img_path = actualimagecursor.getString(actual_image_column_index); 
+		return img_path;
+	}
+	private void upLoadHeadPicToServer(final User user2, final String filename) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, "########################begin");
+		final Handler uploadHandler=new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				Bundle bundle = msg.getData();
+				String filepath=bundle.getString("urlString");
+				UserHelper.writeUserHeadPicUrl(SettingUpActivity.this, filepath);
+				Log.d(TAG, "#############"+String.valueOf(UserHelper.readUserHeadPicUrl(SettingUpActivity.this)));
+			}
+		};
+		new Thread(new  Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					String urlString=HttpConnection.upLoadPicFileToServer(user2,filename);
+					Message msg=new Message();
+					Bundle bundle = new Bundle();
+					bundle.putString("urlString", urlString);
+					msg.setData(bundle);
+					uploadHandler.sendMessage(msg);
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}  
 }

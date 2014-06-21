@@ -32,7 +32,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class CircleService {
 
-	private static final String HOST = "http://168.63.219.187:80/";
+	private static final String HOST = "http://yangwabao.com";
 	private static final String TAG = "CircleService";
 	private static final String APPNAME = "yangwabao";
 	public String getCircleInforFromServer(User user) {
@@ -50,7 +50,7 @@ public class CircleService {
 
 	public String getCircleInforFromServerByNative(User user) {
 		// TODO Auto-generated method stub
-		String urlString=HOST+"quan/getcircletopic/";
+		String urlString=HOST+"/quan/getcircletopic/";
 		List<NameValuePair> userlist = UserHelper
 				.initUserInforNameValuePair(user);
 		InputStream stream = HttpConnection.communicateWithServer(urlString,

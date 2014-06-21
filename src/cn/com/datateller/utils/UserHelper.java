@@ -20,6 +20,19 @@ public class UserHelper {
 	private static final String TAG="UserHelper";
 	private static final String USERINFOR="userInformation";
 	
+	public static String readUserHeadPicUrl(Context context){
+		SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFOR, Activity.MODE_PRIVATE);
+		return sharedPreferences.getString("userheadPicUrl", "");
+	}
+
+	public static boolean writeUserHeadPicUrl(Context context,String urlString){
+		SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFOR, Activity.MODE_PRIVATE);
+		Editor editor=sharedPreferences.edit();
+		editor.putString("userheadPicUrl", urlString);
+		return editor.commit();
+	}
+	
+	
 	public static String readUserName(Context context){
 		SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFOR, Activity.MODE_PRIVATE);
 		return sharedPreferences.getString("username", "");

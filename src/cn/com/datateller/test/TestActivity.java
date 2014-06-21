@@ -11,7 +11,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.Assert;
 
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.test.AndroidTestCase;
 import android.util.Base64;
 import android.util.Log;
@@ -20,6 +22,7 @@ import cn.com.datateller.model.BasicInformation;
 import cn.com.datateller.model.Topic;
 import cn.com.datateller.model.User;
 import cn.com.datateller.service.CircleService;
+import cn.com.datateller.service.ImageService;
 import cn.com.datateller.service.InformationService;
 import cn.com.datateller.service.UserService;
 import cn.com.datateller.utils.DateUtils;
@@ -104,21 +107,24 @@ public class TestActivity extends AndroidTestCase{
 		InformationService service=new InformationService();
 		service.deleteCacheFile(path,filename);
 	}*/
-	
-/*	public void testUploadPic() throws ParseException, Exception, IOException{
+/*	
+	public void testUploadPic() throws ParseException, Exception, IOException{
 		User user=new User();
 		user.setUserName("hujun");
 		user.setPassword("123");
-		user.setUserName(Base64.encodeToString(user.getUserName().getBytes(), Base64.DEFAULT));
 		List<NameValuePair> list = new ArrayList<NameValuePair>();
-		NameValuePair userNamePair = new BasicNameValuePair("username",
-				user.getUserName());
-		list.add(userNamePair);
-		String filepath="/mnt/sdcard/yangwabao/head.jpg";
-		String result=HttpConnection.upLoadPicFileToServer(user.getUserName(), filepath, list);
+		String filepath="/media/external/images/media/15903";
+		String result=HttpConnection.upLoadPicFileToServer(user, filepath);
 		Log.d(TAG, String.valueOf(result));
 	}*/
 	
+/*	public void testgetHeadFromServer(){
+		User user=new User();
+		user.setUserName("hujun");
+		user.setPassword("123");
+		ImageService service=new ImageService();
+		Log.d(TAG, String.valueOf(service.getHeadFromServer(user)));
+	}*/
 	
 /*	public void testUserLogin(){
 		User user=new User();
@@ -128,7 +134,7 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, String.valueOf(service.userLogin("test123", "123")));
 	}*/
 	
-	public void testGetCircleTopic(){
+/*	public void testGetCircleTopic(){
 	    User user=new User();
 	    user.setUserName("hujun");
 	    user.setPassword("123");
@@ -147,6 +153,15 @@ public class TestActivity extends AndroidTestCase{
 		CircleService service=new CircleService();
 		List<Topic> basicCircleList=service.readCircleInformationFromFile(path, filename);
 		Log.d(TAG, String.valueOf(basicCircleList));
+	}*/
+	
+	public void testUserLogin(){
+		User user=new User();
+		user.setUserName("hujun");
+		user.setPassword("123");
+		UserService service=new UserService();
+		service.userLogin("hujun", "123");
+		Log.d(TAG, String.valueOf(service.userLogin("hujun", "123")));
 	}
 	
 }

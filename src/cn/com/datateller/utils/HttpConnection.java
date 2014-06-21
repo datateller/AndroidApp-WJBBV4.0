@@ -7,23 +7,24 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.Header;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
 
+import android.util.Base64;
 import android.util.Log;
+import cn.com.datateller.model.User;
 
 public class HttpConnection {
 
@@ -126,26 +127,35 @@ public class HttpConnection {
 		return null;
 	}
 
-	public static String upLoadPicFileToServer(String username,String filepath,List<NameValuePair> list) throws ClientProtocolException, IOException{
-		String urlString="http://wjbb.cloudapp.net/photos/uploadhead/";
+	public static String upLoadPicFileToServer(User user,String filepath) throws ClientProtocolException, IOException{
+		String urlString="http://yangwabao.com/photos/uploadhead/";
 		HttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 		HttpPost httppost = new HttpPost(urlString);
-		httppost.addHeader("Content-Type", "multipart/form-data");  
-		File file = new File(filepath);
-		UrlEncodedFormEntity entity;
-		entity = new UrlEncodedFormEntity(list, "UTF-8");
-		MultipartEntity mpEntity = new MultipartEntity(); //文件传输
-		ContentBody cbFile = new FileBody(file);
-		mpEntity.addPart("head", cbFile); 
-		httppost.setEntity(entity);
-		httppost.setEntity(mpEntity);
-		HttpResponse response = httpclient.execute(httppost);
-		Log.d(TAG, String.valueOf(response.getStatusLine().getStatusCode()));
-		if (response.getStatusLine().getStatusCode() == 200) {
-			InputStream in = response.getEntity().getContent();
-			return readString(in);
-		}
+		Log.d(TAG,new File(filepath).getPath());
+		FileBody file = new FileBody(new File(filepath));  
+
+		StringBody name=new StringBody(Base64.encodeToString(user.getUserName().getBytes(), Base64.DEFAULT));
+		StringBody password=new StringBody(Base64.encodeToString(user.getPassword().getBytes(), Base64.DEFAULT));
+		MultipartEntity reqEntity = new MultipartEntity();
+		
+        reqEntity.addPart("head", file);  
+        reqEntity.addPart("username",name);
+        reqEntity.addPart("password",password);
+        
+        httppost.setEntity(reqEntity);  
+        HttpResponse response = httpclient.execute(httppost);  
+        Log.d(TAG, String.valueOf(response.getStatusLine().getStatusCode()));
+        if(HttpStatus.SC_OK==response.getStatusLine().getStatusCode()){  
+            HttpEntity entity = response.getEntity();  
+            //显示内容  
+            if (entity != null) {  
+//                System.out.println(EntityUtils.toString(entity));  
+                Log.d(TAG, EntityUtils.toString(entity));
+            }  
+            if (entity != null) {  
+                entity.consumeContent();  
+            }  
+        }  
 		return null;
 	}
 	
