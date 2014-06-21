@@ -25,6 +25,7 @@ public class CircleListViewAdapter extends BaseAdapter{
 		public TextView content;
 		public TextView createtime;
 		public TextView replynum;
+		public ImageView headImageView;
 	}
 	
 	public CircleListViewAdapter(Context context,List<Map<String, Object>> data) {
@@ -65,6 +66,7 @@ public class CircleListViewAdapter extends BaseAdapter{
 					.findViewById(cn.com.datateller.R.id.topicContentTextView);
 			holder.createtime=(TextView)convertView.findViewById(R.id.topicCreateTimeTextView);
 			holder.replynum=(TextView)convertView.findViewById(R.id.topicReplyNumTextView);
+			holder.headImageView=(ImageView)convertView.findViewById(R.id.useHeadImageview);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -73,6 +75,7 @@ public class CircleListViewAdapter extends BaseAdapter{
 		holder.content.setText((String)data.get(position).get("content"));
 		holder.createtime.setText((String)data.get(position).get("createtime"));
 		holder.replynum.setText(String.valueOf(data.get(position).get("replynum")));
+		holder.headImageView.setImageBitmap(BitmapFactory.decodeFile((String)data.get(position).get("headurl")));
 		return convertView;
 	}
 }

@@ -9,13 +9,14 @@ public class Baby implements Serializable{
 
 	private static final long serialVersionUID = -1174610883438428159L;
 	private Integer childId;
-	private Date birthday;
+	private String birthday;
 	private SexEnum sex;
 	private float weight;
 	private float height;
 	private String childname;
 	private String familyAddress;
 	private String schoolAddress;
+	private int userid;
 
 	public Baby() {
 		// TODO Auto-generated constructor stub
@@ -29,16 +30,16 @@ public class Baby implements Serializable{
 		this.childId = childId;
 	}
 
-	public Date getBirthday() {
+	public SexEnum getSex() {
+		return sex;
+	}
+
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
-	}
-
-	public SexEnum getSex() {
-		return sex;
 	}
 
 	public void setSex(SexEnum sex) {
@@ -69,11 +70,15 @@ public class Baby implements Serializable{
 		this.childname = childname;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Baby [childId=" + childId + ", birthday=" + birthday + ", sex="
 				+ sex + ", weight=" + weight + ", height=" + height
-				+ ", childname=" + childname + "]";
+				+ ", childname=" + childname + ", familyAddress="
+				+ familyAddress + ", schoolAddress=" + schoolAddress
+				+ ", userid=" + userid + "]";
 	}
 
 	@Override
@@ -115,6 +120,14 @@ public class Baby implements Serializable{
 
 	public void setSchoolAddress(String schoolAddress) {
 		this.schoolAddress = schoolAddress;
+	}
+
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
 }

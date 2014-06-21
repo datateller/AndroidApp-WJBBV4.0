@@ -25,6 +25,8 @@ public class AgeCircleDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_age_circle_detail);
 		final int topicId = getIntent().getIntExtra("topicId", 0);
+		final int userid=getIntent().getIntExtra("userid", 0);
+		
 		webview = (WebView) findViewById(R.id.webview);
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
@@ -32,7 +34,7 @@ public class AgeCircleDetailActivity extends Activity {
 		webview.setScrollBarStyle(0);
 		webview.getSettings().setDefaultTextEncodingName("UTF-8");
 		final int uid=18;
-		String urlAddress="http://wjbb.cloudapp.net/quan/gettopicwebview/"+uid+"/";
+		String urlAddress="http://yangwabao.com/quan/gettopicbyidwebview/"+userid+"/"+topicId+"/";
 		webview.setWebViewClient(new WebViewClient(){   
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             	loadurl(view,url,uid);//‘ÿ»ÎÕ¯“≥

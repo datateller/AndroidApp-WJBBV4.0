@@ -1,23 +1,18 @@
 package cn.com.datateller.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Topic implements Serializable {
 
 	private static final long serialVersionUID = -9049110328620872795L;
 	private int topicid;
 	private String create_time;
-	private List<Comments> comments;
+	private String headurl;
 	private String from_user;
 	private String update_time;
 	private String content;
-	private int replynum;
+	private int comments_num;
 
-	public Topic() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public int getTopicid() {
 		return topicid;
 	}
@@ -32,6 +27,14 @@ public class Topic implements Serializable {
 
 	public void setCreate_time(String create_time) {
 		this.create_time = create_time;
+	}
+
+	public String getHeadurl() {
+		return headurl;
+	}
+
+	public void setHeadurl(String headurl) {
+		this.headurl = headurl;
 	}
 
 	public String getFrom_user() {
@@ -58,12 +61,20 @@ public class Topic implements Serializable {
 		this.content = content;
 	}
 
+	public int getComments_num() {
+		return comments_num;
+	}
+
+	public void setComments_num(int comments_num) {
+		this.comments_num = comments_num;
+	}
 
 	@Override
 	public String toString() {
 		return "Topic [topicid=" + topicid + ", create_time=" + create_time
-				+ ", comments=" + comments + ", from_user=" + from_user
-				+ ", update_time=" + update_time + ", content=" + content + "]";
+				+ ", headurl=" + headurl + ", from_user=" + from_user
+				+ ", update_time=" + update_time + ", content=" + content
+				+ ", comments_num=" + comments_num + "]";
 	}
 
 	@Override
@@ -88,19 +99,4 @@ public class Topic implements Serializable {
 		return true;
 	}
 
-	public List<Comments> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comments> comments) {
-		this.comments = comments;
-	}
-
-	public int getReplynum() {
-		return replynum;
-	}
-
-	public void setReplynum(int replynum) {
-		this.replynum = replynum;
-	}
 }

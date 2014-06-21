@@ -18,7 +18,8 @@ public class CircleListViewHelper {
 			map.put("fromuser", basicTopicList.get(i).getFrom_user());
 			map.put("content", basicTopicList.get(i).getContent());
 			map.put("createtime", basicTopicList.get(i).getCreate_time());
-			map.put("replynum", basicTopicList.get(i).getReplynum());
+			map.put("replynum", basicTopicList.get(i).getComments_num());
+			map.put("headurl",basicTopicList.get(i).getHeadurl());
 			list.add(map);
 		}
 		System.out.println(list.size());

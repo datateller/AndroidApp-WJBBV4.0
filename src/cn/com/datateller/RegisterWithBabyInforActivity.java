@@ -96,11 +96,16 @@ public class RegisterWithBabyInforActivity extends Activity {
 				if(!etchildweight.getText().toString().equals(""))
 					childweight=Float.valueOf(etchildweight.getText().toString());
 				Log.d(TAG, etchildweight+"");
-				Date birthday=getChildBirthday();
+				String birthday=getChildBirthday();
 //				TODO 无效的出生日期需要重新判断
-				if(birthday.getTime()>System.currentTimeMillis()){
-					DialogHelper.showDialog(RegisterWithBabyInforActivity.this, "Baby出生日期输入错误");
-					return;
+				try {
+					if(new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA).parse(birthday).getTime()>System.currentTimeMillis()){
+						DialogHelper.showDialog(RegisterWithBabyInforActivity.this, "Baby出生日期输入错误");
+						return;
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				String familyAddress=null;
 				if(etfamilyAddress.getText().toString()==""){
@@ -176,7 +181,7 @@ public class RegisterWithBabyInforActivity extends Activity {
 	}
 
 	
-	private Date getChildBirthday() {
+	private String getChildBirthday() {
 		// TODO Auto-generated method stub
 		String year=etbirthyear.getText().toString();
 		String month=etbirthmonth.getText().toString();
@@ -199,6 +204,6 @@ public class RegisterWithBabyInforActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return date;
+		return format.format(date);
 	}
 }

@@ -45,7 +45,7 @@ public final class R {
         public static final int test2=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f090056;
+        public static final int action_settings=0x7f090057;
         public static final int activity_login_layout=0x7f09000c;
         public static final int activity_register_withbabyinfor_layout=0x7f09002c;
         public static final int activity_setup_layout=0x7f090048;
@@ -88,7 +88,7 @@ public final class R {
         public static final int findpasswordButton=0x7f090010;
         public static final int finishButton=0x7f09003c;
         public static final int freshButton=0x7f090007;
-        public static final int fromUserTextView=0x7f090052;
+        public static final int fromUserTextView=0x7f090053;
         public static final int girlButton=0x7f090037;
         public static final int growthdiary_button=0x7f090022;
         public static final int img=0x7f09004f;
@@ -118,9 +118,9 @@ public final class R {
         public static final int schoolcircle_button=0x7f090020;
         public static final int settingup_button=0x7f090024;
         public static final int surroundingservice_button=0x7f09001c;
-        public static final int topicContentTextView=0x7f090053;
-        public static final int topicCreateTimeTextView=0x7f090054;
-        public static final int topicReplyNumTextView=0x7f090055;
+        public static final int topicContentTextView=0x7f090054;
+        public static final int topicCreateTimeTextView=0x7f090055;
+        public static final int topicReplyNumTextView=0x7f090056;
         public static final int topic_content=0x7f090003;
         public static final int tvConfirmPassword=0x7f090027;
         public static final int tvPassword=0x7f090026;
@@ -129,6 +129,7 @@ public final class R {
         public static final int tvtitle=0x7f090050;
         public static final int updateBabyBirthdayButton=0x7f090049;
         public static final int updateUserInforButton=0x7f09004a;
+        public static final int useHeadImageview=0x7f090052;
         public static final int usernameTextView=0x7f090047;
         public static final int webview=0x7f090004;
         public static final int webview_layout=0x7f090002;

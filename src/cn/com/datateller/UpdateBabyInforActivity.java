@@ -1,10 +1,9 @@
 package cn.com.datateller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 import cn.com.datateller.model.Baby;
 import cn.com.datateller.model.User;
 import cn.com.datateller.service.UserService;
@@ -43,6 +42,10 @@ public class UpdateBabyInforActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_update_baby_infor);
+		User user = new User();
+		user.setUserName(UserHelper.readUserName(UpdateBabyInforActivity.this));
+		user.setPassword(UserHelper.readPassword(UpdateBabyInforActivity.this));
+		
 		etchildname=(EditText)findViewById(R.id.etchildrname);
 		rgchildsex=(RadioGroup)findViewById(R.id.childsexRadioGroup);
 		etchildheight=(EditText)findViewById(R.id.etchildheight);
@@ -50,8 +53,27 @@ public class UpdateBabyInforActivity extends Activity {
 		finshButton=(Button)findViewById(R.id.finishButton);
 	    etfamilyAddress=(EditText)findViewById(R.id.etfamilyaddress);
 	    etschoolAddress=(EditText)findViewById(R.id.etschooladdress);
-        rgchildsex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+      
+	    if(user.getUserName().equals("anonymous")){
+	    	AlertDialog.Builder builder=new AlertDialog.Builder(UpdateBabyInforActivity.this);
+			builder.setTitle("提示");
+			builder.setMessage("对不起，您尚未登陆养娃宝，无法修改您的宝贝信息，谢谢！");
+			builder.setPositiveButton("确认", new android.content.DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+                    Intent intent=new Intent();
+                    intent.setClass(UpdateBabyInforActivity.this, LoginActivity.class);
+                    startActivity(intent);
+				}
+			});
+			builder.show();
+	    	return;
+	    }
+	    getBabyInforFromServer(user);
+	    
+	    rgchildsex.setOnCheckedChangeListener(new OnCheckedChangeListener() {	
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkId) {
 				// TODO Auto-generated method stub
@@ -62,6 +84,8 @@ public class UpdateBabyInforActivity extends Activity {
 				}
 			}
 		});
+	    
+	    
         finshButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -72,9 +96,9 @@ public class UpdateBabyInforActivity extends Activity {
 				if(childname==""){
 					DialogHelper.showDialog(UpdateBabyInforActivity.this, "Baby 的姓名不能为空");
 				}
-				int childheight=0;
+				float childheight=0;
 				if(etchildheight.getText().toString()!="") 
-					childheight=Integer.valueOf(etchildheight.getText().toString());
+					childheight=Float.valueOf(etchildheight.getText().toString());
 				Log.d(TAG, childheight+"");
 				float childweight=0.0f;
 				if(etchildweight.getText().toString()!="")
@@ -95,13 +119,8 @@ public class UpdateBabyInforActivity extends Activity {
 				final Baby child=new Baby();
 				user.setUserName(UserHelper.readUserName(UpdateBabyInforActivity.this));
 				user.setPassword(UserHelper.readPassword(UpdateBabyInforActivity.this));
-				Date birthday=new Date();
-				try {
-					birthday = new SimpleDateFormat("yyyy-MM-dd").parse(SharedPreferencesUtils.readBabyBirthdayInfor(UpdateBabyInforActivity.this));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				String birthday;
+			    birthday = SharedPreferencesUtils.readBabyBirthdayInfor(UpdateBabyInforActivity.this);
 				child.setWeight(childweight);
 				child.setHeight(childheight);
 				child.setSex(sex);
@@ -144,6 +163,45 @@ public class UpdateBabyInforActivity extends Activity {
 			}
 		});
         
+	}
+	private void getBabyInforFromServer(final User user) {
+		// TODO Auto-generated method stub
+		final ProgressDialog myDialog = ProgressDialog.show(
+				UpdateBabyInforActivity.this, "正在获取宝贝信息", "请稍后...", true, true);
+		final Handler babyInforHandler=new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				Bundle bundle=msg.getData();
+				Baby baby=(Baby)bundle.getSerializable("babyinfor");
+				myDialog.dismiss();
+				InitComponent(baby);
+			}
+		};
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				UserService service=new UserService();
+				Baby baby=service.getBabyInforFromServerByUsername(user);
+				Message msg=new Message();
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("babyinfor", baby);
+				msg.setData(bundle);
+				babyInforHandler.sendMessage(msg);
+			}
+		}).start();
+	}
+	//将从服务器中获取数据在页面上显示出来
+	protected void InitComponent(Baby baby) {
+		// TODO Auto-generated method stub
+	    etchildname.setText(baby.getChildname());
+	    etchildweight.setText(String.valueOf(baby.getWeight()));
+	    etchildheight.setText(String.valueOf(baby.getHeight()));
+	    etfamilyAddress.setText(String.valueOf(baby.getFamilyAddress()));
+	    etschoolAddress.setText(String.valueOf(baby.getSchoolAddress()));
+	    if(baby.getSex().getIndex()==1)
+     	  rgchildsex.check(R.id.boyButton);
+	    else rgchildsex.check(R.id.girlButton);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

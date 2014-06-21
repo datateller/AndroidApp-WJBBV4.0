@@ -15,13 +15,16 @@ import com.google.gson.Gson;
 
 import android.util.Log;
 import cn.com.datateller.model.Baby;
+import cn.com.datateller.model.ServerBaby;
 import cn.com.datateller.model.User;
 import cn.com.datateller.utils.HttpConnection;
+import cn.com.datateller.utils.SexEnum;
 import cn.com.datateller.utils.UserHelper;
 
 public class UserService {
 
-	private static final String HOST = "http://yangwabao.com";
+//	private static final String HOST = "http://www.yangwabao.com";
+	private static final String HOST = "http://168.63.219.187:80";
 	private static final String TAG = "UserService";
 
 	public boolean userLogin(String username, String password) {
@@ -45,6 +48,7 @@ public class UserService {
 		try {
 			// 返回为字符串"True"时，表示登陆成功
 			String result = HttpConnection.readString(in);
+			Log.d(TAG, "#######################"+result);
 			if (result.equals("True"))
 				return true;
 		} catch (IOException e) {
@@ -122,7 +126,7 @@ public class UserService {
 		NameValuePair childnamePair = new BasicNameValuePair("babyname",
 				baby.getChildname());
 		NameValuePair childbirthdayPair = new BasicNameValuePair("birthday",
-				format.format(baby.getBirthday()));
+				baby.getBirthday());
 		NameValuePair childweightPair = new BasicNameValuePair("babyweight",
 				String.valueOf(baby.getWeight()));
 		NameValuePair childheightPair = new BasicNameValuePair("babyheight",
@@ -249,6 +253,39 @@ public class UserService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public Baby getBabyInforFromServerByUsername(User user) {
+		// TODO Auto-generated method stub
+		String urlString=HOST+"/user/getinfo/";
+		List<NameValuePair> userlist=UserHelper.initUserInforNameValuePair(user);
+		InputStream in=HttpConnection.communicateWithServer(urlString, userlist);
+		if(in==null){
+			Log.d(TAG, "in is null");
+			return null;
+		}
+		try{
+			String result=HttpConnection.readString(in);
+			Log.d(TAG, "################################"+result);
+			Gson gson=new Gson();
+			ServerBaby sbaby=gson.fromJson(result, ServerBaby.class);
+			Log.d(TAG, "#################################"+String.valueOf(sbaby));
+			Baby baby=new Baby();
+			baby.setChildname(sbaby.getBabyname());
+			baby.setBirthday(sbaby.getBirthday());
+			baby.setWeight(sbaby.getWeight());
+			baby.setHeight(sbaby.getHeight());
+			if(sbaby.getSex().equals("男"))
+				baby.setSex(SexEnum.BOY);
+			else baby.setSex(SexEnum.GIRL);
+			baby.setSchoolAddress(sbaby.getSchooladdr());
+			baby.setFamilyAddress(sbaby.getHomeaddr());
+			baby.setUserid(sbaby.getUserid());
+			return baby;
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	

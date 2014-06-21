@@ -61,6 +61,30 @@ public class ImageService {
 		return true;
 	}
 
+	public boolean SaveBitMap(Bitmap bitmap, String path,String picFilename) {
+		// TODO Auto-generated method stub
+		File file = new File(path, picFilename);
+		if (file.exists())
+			return true;
+		Log.d(TAG, "#########################"+path+picFilename);
+		BufferedOutputStream bos;
+		try {
+			bos = new BufferedOutputStream(new FileOutputStream(file));
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+			bos.flush();
+			bos.close();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	
 	public InputStream getImageStream(String path) {
 		try {
 			URL url = new URL(path);

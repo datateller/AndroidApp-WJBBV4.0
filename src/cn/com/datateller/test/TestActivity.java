@@ -134,17 +134,17 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, String.valueOf(service.userLogin("test123", "123")));
 	}*/
 	
-/*	public void testGetCircleTopic(){
+	public void testGetCircleTopic(){
 	    User user=new User();
 	    user.setUserName("hujun");
 	    user.setPassword("123");
 	    CircleService service=new CircleService();
 	    String result=service.getCircleInforFromServerByNative(user);
 	    Log.d(TAG, result);
-	    Log.d(TAG,String.valueOf(service.analysisTopic(result)));
+	    Log.d(TAG,"#########################"+String.valueOf(service.analysisTopic(result)));
 	}
 	
-	public void testGetreadCircleInformationFromFile(){
+/*	public void testGetreadCircleInformationFromFile(){
 		String currentDay = DateUtils.getStandardCurrentDay();
 		String filename = NAME+".xml";
 		String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
@@ -155,13 +155,22 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, String.valueOf(basicCircleList));
 	}*/
 	
-	public void testUserLogin(){
+/*	public void testUserLogin(){
 		User user=new User();
 		user.setUserName("hujun");
 		user.setPassword("123");
 		UserService service=new UserService();
 		service.userLogin("hujun", "123");
 		Log.d(TAG, String.valueOf(service.userLogin("hujun", "123")));
-	}
+	}*/
+	
+/*	public void testgetBabyInforFromServerByUsername(){
+		User user=new User();
+		user.setUserName("hujun");
+		user.setPassword("123");
+		UserService service=new UserService();
+		Log.d(TAG,String.valueOf(service.getBabyInforFromServerByUsername(user)));
+	}*/
+	
 	
 }

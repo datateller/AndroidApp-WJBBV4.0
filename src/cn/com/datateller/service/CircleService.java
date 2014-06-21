@@ -20,8 +20,11 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import android.graphics.Bitmap;
+import android.os.Environment;
 import cn.com.datateller.model.Topic;
 import cn.com.datateller.model.User;
+import cn.com.datateller.utils.DateUtils;
 import cn.com.datateller.utils.FileUtils;
 import cn.com.datateller.utils.HttpConnection;
 import cn.com.datateller.utils.UserHelper;
@@ -29,15 +32,16 @@ import cn.com.datateller.utils.UserHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
 public class CircleService {
 
 	private static final String HOST = "http://yangwabao.com";
 	private static final String TAG = "CircleService";
 	private static final String APPNAME = "yangwabao";
+	private static final String TOPICPATH = "topic";
+
 	public String getCircleInforFromServer(User user) {
 		// TODO Auto-generated method stub
-		String urlString=HOST+"/quan/gettopicwebview/14/";
+		String urlString = HOST + "/quan/gettopicwebview/14/";
 		List<NameValuePair> userlist = UserHelper
 				.initUserInforNameValuePair(user);
 		InputStream stream = HttpConnection.communicateWithServer(urlString,
@@ -50,7 +54,7 @@ public class CircleService {
 
 	public String getCircleInforFromServerByNative(User user) {
 		// TODO Auto-generated method stub
-		String urlString=HOST+"/quan/getcircletopic/";
+		String urlString = HOST + "/quan/getcircletopiclist/";
 		List<NameValuePair> userlist = UserHelper
 				.initUserInforNameValuePair(user);
 		InputStream stream = HttpConnection.communicateWithServer(urlString,
@@ -61,9 +65,10 @@ public class CircleService {
 		return input;
 	}
 
-	public List<Topic> analysisTopic(String stream){
+	public List<Topic> analysisTopic(String stream) {
 		Gson gson = new Gson();
-		Type type = new TypeToken<ArrayList<Topic>>(){}.getType();
+		Type type = new TypeToken<ArrayList<Topic>>() {
+		}.getType();
 		return gson.fromJson(stream, type);
 	}
 
@@ -96,9 +101,11 @@ public class CircleService {
 							topic.setUpdate_time(ele.getText());
 						} else if ("content".equals(ele.getName())) {
 							topic.setContent(ele.getText());
-						} else if ("replynum".equals(ele.getName())) {
-							topic.setReplynum(Integer.valueOf(ele.getText()));
-						} 
+						} else if ("headurl".equals(ele.getName())) {
+							topic.setHeadurl(ele.getText());
+						} else if ("commentsnum".equals(ele.getName())) {
+							topic.setComments_num(Integer.valueOf(ele.getText()));
+						}
 					}
 					list.add(topic);
 					topic = null;
@@ -123,19 +130,21 @@ public class CircleService {
 		Element elementRoot = doc.addElement("BasicTopics");
 		int length = basicTopic.size();
 		for (int i = 0; i < length; i++) {
-			Element topic=elementRoot.addElement("BasicTopic");
-			Element topicId=topic.addElement("topicid");
-			topicId.addText(basicTopic.get(i).getTopicid()+"");
-			Element topicCreatetime=topic.addElement("create_time");
-			topicCreatetime.addText(basicTopic.get(i).getCreate_time()+"");
-			Element topicFromUser=topic.addElement("from_user");
-			topicFromUser.addText(basicTopic.get(i).getFrom_user()+"");
-			Element topicUpdateTime=topic.addElement("update_time");
-			topicUpdateTime.addText(basicTopic.get(i).getUpdate_time()+"");
-			Element topicContent=topic.addElement("content");
-			topicContent.addText(basicTopic.get(i).getContent()+"");
-			Element topicReplyNum=topic.addElement("replynum");
-			topicReplyNum.addText(basicTopic.get(i).getComments().size()+"");
+			Element topic = elementRoot.addElement("BasicTopic");
+			Element topicId = topic.addElement("topicid");
+			topicId.addText(basicTopic.get(i).getTopicid() + "");
+			Element topicCreatetime = topic.addElement("create_time");
+			topicCreatetime.addText(basicTopic.get(i).getCreate_time() + "");
+			Element topicFromUser = topic.addElement("from_user");
+			topicFromUser.addText(basicTopic.get(i).getFrom_user() + "");
+			Element topicUpdateTime = topic.addElement("update_time");
+			topicUpdateTime.addText(basicTopic.get(i).getUpdate_time() + "");
+			Element topicContent = topic.addElement("content");
+			topicContent.addText(basicTopic.get(i).getContent() + "");
+			Element topicHeadUrl = topic.addElement("headurl");
+			topicHeadUrl.addText(basicTopic.get(i).getHeadurl());
+			Element topicCommentNum = topic.addElement("commentsnum");
+			topicCommentNum.addText(basicTopic.get(i).getComments_num() + "");
 		}
 		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
 		outputFormat.setEncoding("utf-8");
@@ -151,5 +160,29 @@ public class CircleService {
 			e.printStackTrace();
 		}
 		FileUtils.SaveXml(path, filename, xmlWriter.toString());
+	}
+
+	public List<Topic> getUserHeadByUrl(List<Topic> topicList) {
+		// TODO Auto-generated method stub
+		ImageService service = new ImageService();
+		String path = Environment.getExternalStorageDirectory() + "/" + APPNAME
+				+ "/" + TOPICPATH + "/";
+		File file = new File(path);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		for (Topic topic : topicList) {
+			Bitmap bitmap = service.getImageFromServer(topic.getHeadurl());
+			if (bitmap != null) {
+				String headFilename = String
+						.valueOf(System.currentTimeMillis()) + ".gif";
+				service.SaveBitMap(bitmap, path, headFilename);
+				topic.setHeadurl(path + headFilename);
+			}else{
+//				topic.setHeadurl(path+"default.gif");
+//				for()
+			}
+		}
+		return topicList;
 	}
 }

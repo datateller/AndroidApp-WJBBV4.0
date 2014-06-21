@@ -38,11 +38,13 @@ public class AgeCircleActivity extends Activity {
 	private static final String NAME="AgeTopic";
 	private ListView listview;
 	private Handler handler;
+	private Integer userid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_age_circle);
+		userid=UserHelper.readUserId(AgeCircleActivity.this);
         showAgeCircleInformation();
 	}
 
@@ -113,6 +115,9 @@ public class AgeCircleActivity extends Activity {
 						.readPassword(AgeCircleActivity.this));
 				String result=service.getCircleInforFromServerByNative(user);
 				List<Topic> topicList=service.analysisTopic(result);
+				if(topicList!=null){
+					topicList=service.getUserHeadByUrl(topicList);
+				}
 				Log.d(TAG, String.valueOf(topicList));
 				Message msg = new Message();
 				Bundle bundle = new Bundle();
@@ -141,6 +146,7 @@ public class AgeCircleActivity extends Activity {
 				int topicId=Integer.valueOf(basicCircleList.get(index).getTopicid());
 				Intent intent = new Intent();
 				intent.putExtra("topicId", topicId);
+				intent.putExtra("userid", userid);
 				intent.setClass(AgeCircleActivity.this, AgeCircleDetailActivity.class);
 				AgeCircleActivity.this.startActivity(intent);
 			}
