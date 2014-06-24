@@ -104,7 +104,7 @@ public class ImageService {
 		return null;
 	}
 
-	private String getHeadUrlFromServer(User user){
+	public String getHeadUrlFromServer(User user){
 		String urlString=HOST+"/photos/gethead/";
 		List<NameValuePair> userlist=UserHelper.initUserInforNameValuePair(user);
 		InputStream in = HttpConnection.communicateWithServer(urlString,userlist);
@@ -128,7 +128,7 @@ public class ImageService {
 		// TODO Auto-generated method stub
 		String urlpath=getHeadUrlFromServer(user);
 		Bitmap bitmap=getImageFromServer(urlpath);	
-		Log.d(TAG, String.valueOf(bitmap));
+		Log.d(TAG, "########################3"+String.valueOf(bitmap));
 		String filepath = Environment.getExternalStorageDirectory()+"/"+APPNAME+"/";
 		File file = new File(filepath,USERHEADPIC);
 		if(file.exists())

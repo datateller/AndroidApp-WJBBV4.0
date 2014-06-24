@@ -37,206 +37,215 @@
         android:layout_below="@id/main_titleBar_layout"
         android:background="#fdf8ea" >
 
-         <FrameLayout 
+        <FrameLayout
             android:id="@+id/main_imageView_frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp" 
-         >
+            android:layout_height="150dp" >
 
-        <ImageView
-            android:id="@+id/main_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/mainview" 
-            android:contentDescription="Main_imageView"/>
-        
-        <TextView
-            android:id="@+id/main_babyBirthday_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="12dp"
-            android:textSize="20sp"
-            android:textColor="#111111"
-             />
-       
-        <TextView 
-            android:id="@+id/main_dateAndWeather_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#111111"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="33dp"
-            android:textSize="15sp"
-            />
-        
-       </FrameLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </android.support.v4.view.ViewPager>
 
-         <RelativeLayout
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/viewGroup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" 
+                    android:layout_alignParentRight="true"  
+                    android:layout_marginBottom="10dp"   
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/main_babyBirthday_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="12dp"
+                android:textColor="#111111"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/main_dateAndWeather_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="33dp"
+                android:layout_marginLeft="12dp"
+                android:textColor="#111111"
+                android:textSize="15sp" />
+        </FrameLayout>
+
+        <RelativeLayout
             android:id="@+id/main_listview_relativelayout"
-            android:layout_below="@id/main_imageView_frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20sp"
+            android:layout_below="@id/main_imageView_frameLayout"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"
-            >
+            android:layout_marginTop="20sp" >
 
-             <LinearLayout
-                 android:id="@+id/main_category_linearlayout"
-                 android:layout_width="match_parent"
-                 android:layout_height="270sp"
-                 android:layout_alignParentTop="true"
-                 android:layout_centerHorizontal="true"
-                 android:orientation="vertical"
-                  >
-                  
-                 <LinearLayout 
-                     android:id="@+id/row_one"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:layout_weight="1"
-                     android:orientation="horizontal"
-                     >
-                     <Button 
-                         android:id="@+id/knowledge_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#f9afbc"
-                         android:text="今日知识"
-                         android:textColor="#ffffff"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/commerical_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#25bff7"
-                         android:text="特价商品"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/surroundingservice_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#eb9534"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="周边服务"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                 </LinearLayout>
-                 <View 
-                     android:layout_width="match_parent"
-                     android:layout_height="8sp"
-                     android:background="#fdf8ea"
-                     />
-                 <LinearLayout 
-                     android:id="@+id/row_two"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:layout_weight="1"
-                     android:orientation="horizontal"
-                     
-                     >
-                      <Button 
-                         android:id="@+id/agecircle_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#7bbfea"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="同龄圈"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/familycircle_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#d797c2"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="家圈"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/schoolcircle_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#a6f3ff"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="校圈"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                 </LinearLayout>
-                 <View 
-                     android:layout_width="match_parent"
-                     android:layout_height="8sp"
-                     android:background="#fdf8ea"
-                     />
-                 <LinearLayout 
-                     android:id="@+id/row_three"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:layout_weight="1"
-                     android:orientation="horizontal"
-                     >
-                      <Button 
-                         android:id="@+id/growthdiary_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#cc99fe"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="成长日志"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/collection_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
+            <LinearLayout
+                android:id="@+id/main_category_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="270sp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/row_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/knowledge_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#f9afbc"
+                        android:text="今日知识"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/commerical_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#25bff7"
+                        android:text="特价商品"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/surroundingservice_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#eb9534"
+                        android:text="周边服务"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8sp"
+                    android:background="#fdf8ea" />
+
+                <LinearLayout
+                    android:id="@+id/row_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/agecircle_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#7bbfea"
+                        android:text="同龄圈"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/familycircle_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#d797c2"
+                        android:text="家圈"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/schoolcircle_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#a6f3ff"
+                        android:text="校圈"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8sp"
+                    android:background="#fdf8ea" />
+
+                <LinearLayout
+                    android:id="@+id/row_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/growthdiary_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#cc99fe"
+                        android:text="成长日志"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/collection_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
                         android:background="#96f3ce"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="收藏"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                     <Button 
-                         android:id="@+id/settingup_button"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:layout_weight="1"
-                         android:background="#f2c5aa"
-                         android:layout_marginLeft="5sp"
-                         android:layout_marginRight="5sp"
-                         android:text="设置"
-                         android:textColor="#ffffff"
-                         android:textSize="16sp"
-                         />
-                 </LinearLayout>
-             </LinearLayout>
+                        android:text="收藏"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/settingup_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_weight="1"
+                        android:background="#f2c5aa"
+                        android:text="设置"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+
 </RelativeLayout>

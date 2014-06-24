@@ -338,7 +338,7 @@ public class InformationService {
 //				Log.d(TAG, String.valueOf(iter.next().getName()));
 				Element basicInformationElement=iter.next();
 				if(basicInformationElement.getName().equals("BasicInformation")){
-                   BasicInformation basicInformation=new BasicInformation();
+//                   BasicInformation basicInformation=new BasicInformation();
                    Iterator<Element> inIterator=basicInformationElement.elementIterator();
                    while(inIterator.hasNext()){
                 	   Element ele=inIterator.next();

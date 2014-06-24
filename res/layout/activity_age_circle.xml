@@ -10,6 +10,15 @@
         android:layout_height="50dp"
         android:background="#79ad63" >
 
+        <ImageButton 
+            android:id="@+id/freshButton"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:src="@drawable/fresh"
+            android:background="#79ad63"
+            android:layout_marginLeft="5sp"
+            />
+        
         <TextView
             android:id="@+id/main_title_textview"
             android:layout_width="wrap_content"

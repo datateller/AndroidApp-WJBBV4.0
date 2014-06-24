@@ -16,19 +16,19 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import cn.com.datateller.model.BasicInformation;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import cn.com.datateller.model.Topic;
 import cn.com.datateller.model.User;
 import cn.com.datateller.service.CircleService;
-import cn.com.datateller.service.InformationService;
 import cn.com.datateller.utils.CircleListViewAdapter;
 import cn.com.datateller.utils.CircleListViewHelper;
 import cn.com.datateller.utils.DateUtils;
 import cn.com.datateller.utils.DialogHelper;
-import cn.com.datateller.utils.ListViewHelper;
 import cn.com.datateller.utils.UserHelper;
 
 public class AgeCircleActivity extends Activity {
@@ -39,13 +39,27 @@ public class AgeCircleActivity extends Activity {
 	private ListView listview;
 	private Handler handler;
 	private Integer userid;
+	private ImageButton freshButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_age_circle);
 		userid=UserHelper.readUserId(AgeCircleActivity.this);
-        showAgeCircleInformation();
+        freshButton=(ImageButton)findViewById(R.id.freshButton);
+        freshButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				CircleService service=new CircleService();
+				String currentDay = DateUtils.getStandardCurrentDay();
+				String filename = NAME+".xml";
+				String path = Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+currentDay;
+				service.deleteCacheFile(path,filename);
+				showAgeCircleInformation();
+			}
+		});
+		showAgeCircleInformation();
 	}
 
 	@Override

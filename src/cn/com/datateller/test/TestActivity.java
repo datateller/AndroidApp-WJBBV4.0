@@ -134,15 +134,15 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG, String.valueOf(service.userLogin("test123", "123")));
 	}*/
 	
-	public void testGetCircleTopic(){
+/*	public void testGetCircleTopic(){
 	    User user=new User();
-	    user.setUserName("hujun");
-	    user.setPassword("123");
+	    user.setUserName("xzh");
+	    user.setPassword("111111");
 	    CircleService service=new CircleService();
 	    String result=service.getCircleInforFromServerByNative(user);
 	    Log.d(TAG, result);
 	    Log.d(TAG,"#########################"+String.valueOf(service.analysisTopic(result)));
-	}
+	}*/
 	
 /*	public void testGetreadCircleInformationFromFile(){
 		String currentDay = DateUtils.getStandardCurrentDay();
@@ -171,6 +171,14 @@ public class TestActivity extends AndroidTestCase{
 		UserService service=new UserService();
 		Log.d(TAG,String.valueOf(service.getBabyInforFromServerByUsername(user)));
 	}*/
+	
+	public void testgetHeadUrlFromServer(){
+		User user=new User();
+		user.setUserName("xzh");
+		user.setPassword("111111");
+		ImageService service=new ImageService();
+        Log.d(TAG,service.getHeadUrlFromServer(user));
+	}
 	
 	
 }

@@ -178,11 +178,48 @@ public class CircleService {
 						.valueOf(System.currentTimeMillis()) + ".gif";
 				service.SaveBitMap(bitmap, path, headFilename);
 				topic.setHeadurl(path + headFilename);
-			}else{
-//				topic.setHeadurl(path+"default.gif");
-//				for()
+			} else {
+				// topic.setHeadurl(path+"default.gif");
+				// for()
 			}
 		}
 		return topicList;
+	}
+
+	public void deleteCacheFile(String path, String filename) {
+		// TODO Auto-generated method stub
+		List<String> list = new ArrayList<String>();
+		try {
+			File file = new File(path, filename);
+			FileInputStream is = new FileInputStream(file);
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(is);
+			Element eleRoot = doc.getRootElement();
+			Iterator<Element> iter = eleRoot.elementIterator();
+			while (iter.hasNext()) {
+				Element topicElement = iter.next();
+				if (topicElement.getName().equals("BasicTopic")) {
+					Iterator<Element> inIterator = topicElement
+							.elementIterator();
+					while (inIterator.hasNext()) {
+						Element ele = inIterator.next();
+						if (ele.getName().equals("headurl")) {
+							String iconFilename = ele.getText();
+							if (iconFilename.startsWith("/mnt")) {
+								File iconfile = new File(iconFilename);
+								if (iconfile.exists())
+									iconfile.delete();
+							}
+						}
+					}
+				}
+			}
+			file.delete();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }
