@@ -48,18 +48,35 @@ public class LoginActivity extends Activity {
 		registerButton.setOnClickListener(new ButtonClick());
 		loginButton.setOnClickListener(new ButtonClick());
 
-		/*etpassword.setOnFocusChangeListener(new OnFocusChangeListener() {
+		etuserName.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
+			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(hasFocus==true){
-					etpassword.setTextColor(LoginActivity.this.getResources().getColor(R.color.black));
-					etpassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-					etpassword.clearComposingText();
-				}
+			    etuserName.setText("");	
+			}
+		});
+		/*etpassword.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+			    Log.d(TAG, "###############################");
+				etpassword.setText("");	
 			}
 		});*/
+		etpassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+			@Override
+			public void onFocusChange(View view, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if(hasFocus){
+					etpassword.setText("");
+				}
+			}
+			
+		});
+		
 	}
 
 	@Override

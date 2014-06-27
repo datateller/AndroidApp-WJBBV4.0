@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import cn.com.datateller.model.Topic;
 import cn.com.datateller.model.User;
@@ -40,6 +41,7 @@ public class AgeCircleActivity extends Activity {
 	private Handler handler;
 	private Integer userid;
 	private ImageButton freshButton;
+	private ImageView sendTopicImageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class AgeCircleActivity extends Activity {
 		setContentView(R.layout.activity_age_circle);
 		userid=UserHelper.readUserId(AgeCircleActivity.this);
         freshButton=(ImageButton)findViewById(R.id.freshButton);
+        sendTopicImageView=(ImageView)findViewById(R.id.sendTopicImageView);
+        
         freshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -59,6 +63,18 @@ public class AgeCircleActivity extends Activity {
 				showAgeCircleInformation();
 			}
 		});
+        
+        sendTopicImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+			    Intent intent=new Intent();	
+			    intent.setClass(AgeCircleActivity.this, TopicSendActivity.class);
+			    startActivity(intent);
+			}
+		});
+        
 		showAgeCircleInformation();
 	}
 

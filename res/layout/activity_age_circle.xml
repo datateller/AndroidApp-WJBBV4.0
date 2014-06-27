@@ -29,6 +29,12 @@
             android:textColor="#ffffff"
             android:textSize="22sp" />
 
+        <ImageView
+            android:id="@+id/sendTopicImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/sendtopic" />
         
     </RelativeLayout>
     <RelativeLayout

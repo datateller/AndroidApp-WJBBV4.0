@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -20,6 +21,7 @@ public class AgeCircleDetailActivity extends Activity {
 	private WebView webview;
 	private Handler handler;
 	private ProgressDialog progressDialog;	
+	private static final String TAG="AgeCircleDetailActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,7 +67,8 @@ public class AgeCircleDetailActivity extends Activity {
 				int result = bundle.getInt("msgid");
 				switch (result) {
 				case 0:
-					progressDialog.show();// 显示进度对话框
+					progressDialog.show();
+					// 显示进度对话框
 					break;
 				case 1:
 					progressDialog.dismiss();// 隐藏进度对话框，不可使用dismiss()、cancel(),否则再次调用show()时，显示的对话框小圆圈不会动。
@@ -112,8 +115,11 @@ public class AgeCircleDetailActivity extends Activity {
 				} else {
 					bundle.putInt("msgid", 0);
 					msg.setData(bundle);
+					Log.d(TAG, "#################################"+String.valueOf(msg));
+					Log.d(TAG, "#################################"+String.valueOf(handler));
 					handler.sendMessage(msg);
 					view.loadUrl(url);// 载入网页
+					Log.d(TAG, "#############################end");
 				}
 			}
 		}.start();

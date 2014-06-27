@@ -28,7 +28,7 @@
     <string name="girl">女</string>
     <string name="weightunit">千克</string>
     <string name="heightunit">cm</string>
-    <string name="childname">姓名</string>
+    <string name="childname">宝宝姓名</string>
     <string name="birthyear">年</string>
     <string name="birthmonth">月</string>
     <string name="birthday">日</string>
@@ -45,5 +45,6 @@
     <string name="title_activity_detail_surrounding">DetailSurroundingActivity</string>
     <string name="title_activity_update_user_infor">UpdateUserInforActivity</string>
     <string name="title_activity_age_circle_detail">AgeCircleDetailActivity</string>
+    <string name="title_activity_topic_send">TopicSendActivity</string>
 
 </resources>

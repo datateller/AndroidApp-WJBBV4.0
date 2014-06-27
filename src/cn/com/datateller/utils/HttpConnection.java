@@ -17,6 +17,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -155,6 +156,44 @@ public class HttpConnection {
             if (entity != null) {  
                 entity.consumeContent();  
             }  
+//            return EntityUtils.toString(entity);
+        }  
+		return null;
+	}
+
+	public static String postTopic(User user, String filename,String content) throws Exception {
+		// TODO Auto-generated method stub
+		String urlString="http://yangwabao.com/quan/posttopic/";
+		String result="";
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(urlString);
+		
+		StringBody name=new StringBody(Base64.encodeToString(user.getUserName().getBytes(), Base64.DEFAULT));
+		StringBody password=new StringBody(Base64.encodeToString(user.getPassword().getBytes(), Base64.DEFAULT));
+		StringBody contentBody=new StringBody(content);
+		MultipartEntity reqEntity = new MultipartEntity();
+		reqEntity.addPart("username",name);
+	    reqEntity.addPart("password",password);
+	    reqEntity.addPart("content",contentBody);
+	    if(!filename.equals("")){
+		   FileBody file = new FileBody(new File(filename)); 
+		   reqEntity.addPart("photo",file);
+		}
+	    httppost.setEntity(reqEntity);  
+        HttpResponse response = httpclient.execute(httppost);  
+        Log.d(TAG, String.valueOf(response.getStatusLine().getStatusCode()));
+        if(HttpStatus.SC_OK==response.getStatusLine().getStatusCode()){  
+            HttpEntity entity = response.getEntity();  
+            //œ‘ æƒ⁄»›  
+            if (entity != null) {  
+//                System.out.println(EntityUtils.toString(entity));  
+            	result=EntityUtils.toString(entity);
+                Log.d(TAG, "#################"+result);
+            }  
+            if (entity != null) {  
+                entity.consumeContent();  
+            } 
+            return result;
         }  
 		return null;
 	}

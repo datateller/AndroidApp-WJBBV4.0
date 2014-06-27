@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/childheight"
             android:layout_below="@+id/childheight"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="74dp"
             android:text="@string/family_address"
             android:textSize="20sp" />
 
@@ -78,6 +78,17 @@
             android:text="@string/school_address"
             android:textSize="20sp" />
 
+         <TextView
+            android:id="@+id/birthdayTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/etchildweight"
+            android:layout_below="@+id/childheight"
+            android:layout_marginTop="24sp"
+            android:textSize="20sp"
+            android:text="出生日期" />
+        
         <EditText
             android:id="@+id/etchildrname"
             android:layout_width="150dp"
@@ -112,7 +123,7 @@
                 android:text="@string/girl"
                 android:textSize="20sp" />
         </RadioGroup>
-
+        
         <EditText
             android:id="@+id/etchildheight"
             android:layout_width="115dp"
@@ -197,6 +208,17 @@
             android:ems="20"
             android:inputType="text" >
         </EditText>
+
+        <EditText
+            android:id="@+id/birthdayEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/birthdayTextview"
+            android:layout_alignBottom="@+id/birthdayTextview"
+            android:layout_alignLeft="@+id/etfamilyaddress"
+            android:layout_alignParentRight="true"
+            android:ems="10" />
+
     </RelativeLayout>
 
 </RelativeLayout>

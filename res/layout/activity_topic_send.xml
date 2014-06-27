@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TopicSendActivity" >
+
+     <RelativeLayout
+        android:id="@+id/main_titleBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#79ad63" >
+
+        <TextView
+            android:id="@+id/main_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="发表新帖"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+        
+        <ImageView 
+            android:id="@+id/confirmImageview"
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/confirm"
+            />
+        
+    </RelativeLayout>
+    <RelativeLayout 
+        android:id="@+id/sendTopicLayout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/main_titleBar_layout"
+        android:background="#ecd9df" 
+        >
+        <EditText 
+            android:id="@+id/topicContentEditText"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="请输入内容"
+            android:gravity="top"
+            android:minLines="10"
+            android:background="#ecd9df" 
+            />
+        <RelativeLayout 
+            android:id="@+id/sendTopicPicLayout"
+            android:layout_height="40sp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/topicContentEditText"
+            >
+            <TextView 
+                android:id="@+id/introductiontv"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="发送到同龄圈"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                >
+            </TextView>"
+            
+            <ImageView 
+                android:id="@+id/topicPicImageview"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:src="@drawable/uploadpic"
+                android:layout_alignParentRight="true"
+                />
+            
+        </RelativeLayout>
+    </RelativeLayout>
+     
+
+</RelativeLayout>

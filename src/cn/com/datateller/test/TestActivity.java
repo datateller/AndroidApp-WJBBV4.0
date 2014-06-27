@@ -172,12 +172,22 @@ public class TestActivity extends AndroidTestCase{
 		Log.d(TAG,String.valueOf(service.getBabyInforFromServerByUsername(user)));
 	}*/
 	
-	public void testgetHeadUrlFromServer(){
+/*	public void testgetHeadUrlFromServer(){
 		User user=new User();
 		user.setUserName("xzh");
 		user.setPassword("111111");
 		ImageService service=new ImageService();
         Log.d(TAG,service.getHeadUrlFromServer(user));
+	}*/
+	
+	public void testPostTopic() throws Exception{
+		User user=new User();
+		user.setUserName("hujun");
+		user.setPassword("123");
+		String content="This is a test,This is a test";
+		String filepath=Environment.getExternalStorageDirectory() +"/"+APPNAME+"/"+"testupload.jpg";
+		String result=HttpConnection.postTopic(user, "", content);
+		Log.d(TAG, String.valueOf(result));
 	}
 	
 	
